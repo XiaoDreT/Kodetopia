@@ -22,40 +22,62 @@ const KonsultasiSection = () => {
     }
 
     const validate = async () => {
-        let valid = true;
-        if (!namaLengkap) {
-            await showToast('error', 'Error', 'Nama Lengkap Kosong');
-            valid = false;
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const phoneRegex = /^[0-9]+$/;
+
+        if (!namaLengkap.trim()) {
+            await showToast('error', 'Error', 'Nama Lengkap tidak boleh kosong');
+            return false;
         }
 
-        if (!email) {
-            await showToast('error', 'Error', 'Email Kosong');
-            valid = false;
+        if (!email.trim()) {
+            await showToast('error', 'Error', 'Email tidak boleh kosong');
+            return false;
         }
 
-        if (!noTelp) {
-            await showToast('error', 'Error', 'No Telp Kosong');
-            valid = false;
+        if (!emailRegex.test(email)) {
+            await showToast('error', 'Error', 'Format email tidak valid');
+            return false;
+        }
+
+        if (!noTelp.trim()) {
+            await showToast('error', 'Error', 'No Telp tidak boleh kosong');
+            return false;
+        }
+
+        if (!phoneRegex.test(noTelp)) {
+            await showToast('error', 'Error', 'No Telp hanya boleh angka');
+            return false;
+        }
+
+        if (noTelp.length < 10 || noTelp.length > 15) {
+            await showToast('error', 'Error', 'No Telp harus antara 10–15 digit');
+            return false;
         }
 
         if (!layanan) {
-            await showToast('error', 'Error', 'Layanan Kosong');
-            valid = false;
+            await showToast('error', 'Error', 'Silakan pilih layanan');
+            return false;
         }
 
-        if (!pesan) {
-            await showToast('error', 'Error', 'Pesan Kosong');
-            valid = false;
+        if (!pesan.trim()) {
+            await showToast('error', 'Error', 'Pesan tidak boleh kosong');
+            return false;
         }
 
-        return valid;
+        if (pesan.length < 10) {
+            await showToast('error', 'Error', 'Pesan minimal 10 karakter');
+            return false;
+        }
+
+        return true;
     }
 
     const reset = () => {
         setNamaLengkap('');
         setEmail('');
         setNoTelp('');
-        setLayanan(null);
+        setLayanan('');
         setPesan('');
     }
 
@@ -147,6 +169,8 @@ const KonsultasiSection = () => {
                             <label className="block text-sm font-medium mb-1">Nama Lengkap</label>
                             <input
                                 type="text"
+                                placeholder="Masukkan nama lengkap Anda"
+                                value={namaLengkap}
                                 onChange={(e) => setNamaLengkap(e.target.value)}
                                 className="w-full px-3 py-2 border border-gray-300 rounded shadow-sm focus:outline-none focus:ring focus:border-blue-400"
                             />
@@ -156,15 +180,19 @@ const KonsultasiSection = () => {
                             <label className="block text-sm font-medium mb-1">Email</label>
                             <input
                                 type="email"
+                                placeholder="Contoh: nama@email.com"
+                                value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                                 className="w-full px-3 py-2 border border-gray-300 rounded shadow-sm focus:outline-none focus:ring focus:border-blue-400"
                             />
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium mb-1">No Telp</label>
+                            <label className="block text-sm font-medium mb-1">No Telepon</label>
                             <input
-                                type="text"
+                                type="tel"
+                                placeholder="08xxxxxxxxxx"
+                                value={noTelp}
                                 onChange={(e) => setNoTelp(e.target.value)}
                                 className="w-full px-3 py-2 border border-gray-300 rounded shadow-sm focus:outline-none focus:ring focus:border-blue-400"
                             />
@@ -174,7 +202,7 @@ const KonsultasiSection = () => {
                             <label className="block text-sm font-medium mb-1">Layanan</label>
                             <select
                                 className="w-full px-3 py-2 border border-gray-300 rounded shadow-sm focus:outline-none focus:ring focus:border-blue-400"
-                                defaultValue=""
+                                value={layanan}
                                 onChange={(e) => setLayanan(e.target.value)}
                             >
                                 <option value="" disabled>
@@ -190,14 +218,14 @@ const KonsultasiSection = () => {
                         </div>
 
 
-                        <div>
-                            <label className="block text-sm font-medium mb-1">Pesan</label>
-                            <textarea
-                                rows="4"
-                                className="w-full px-3 py-2 border border-gray-300 rounded shadow-sm focus:outline-none focus:ring focus:border-blue-400"
-                                onChange={(e) => setPesan(e.target.value)}
-                            ></textarea>
-                        </div>
+                        {/* Pesan */}
+                        <textarea
+                            rows="4"
+                            placeholder="Tulis kebutuhan atau pertanyaan Anda di sini"
+                            value={pesan}
+                            onChange={(e) => setPesan(e.target.value)}
+                            className="w-full px-3 py-2 border border-gray-300 rounded shadow-sm focus:outline-none focus:ring focus:border-blue-400"
+                        />
 
                         <button
                             type="submit"
