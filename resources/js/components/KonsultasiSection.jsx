@@ -97,7 +97,7 @@ const KonsultasiSection = () => {
             no_hp: noTelp,
             layanan: layanan,
             pesan: pesan,
-            tanggal_submit: new Date()
+            tanggal_submit: new Date().toISOString().slice(0, 19).replace('T', ' ')
         }
 
         try {

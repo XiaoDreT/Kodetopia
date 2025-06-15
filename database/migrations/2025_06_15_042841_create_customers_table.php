@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id('customer_id');
             $table->char('nama', 50);
             $table->char('email', 50);
-            $table->integer('no_hp')->length(15);
+            $table->string('no_hp', 15);
             $table->timestamps();
         });
     }
