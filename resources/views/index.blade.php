@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Kodetopia</title>
+     <link rel="shortcut icon" href="/images/icon.png" type="image/x-icon">
     @viteReactRefresh
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
