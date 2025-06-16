@@ -2,24 +2,34 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Customer;
-use App\Models\Admin;
+use Carbon\Carbon;
 
 class Pesanan extends Model
 {
-    protected $primaryKey = 'pesanan_id';
+    use HasFactory;
+
+    // Tentukan nama tabel yang sesuai
+    protected $table = 'pesanan';  // Gunakan nama tabel yang benar (misalnya 'pesanan')
+
+    // Kolom yang diizinkan untuk penugasan massal
     protected $fillable = [
-        'customer_id', 'layanan', 'pesan', 'tanggal_submit', 'admin_id', 'is_confirm'
+        'nama',
+        'email',
+        'no_telepon',
+        'status',
+        'layanan',
+        'order_date',
     ];
 
-    public function customer()
+    // Set default value untuk order_date sebelum disimpan
+    protected static function booted()
     {
-        return $this->belongsTo(Customer::class, 'customer_id');
-    }
-
-    public function admin()
-    {
-        return $this->belongsTo(Admin::class, 'admin_id');
+        static::creating(function ($pesanan) {
+            if (!$pesanan->order_date) {
+                $pesanan->order_date = Carbon::now();  // Set order_date jika belum ada nilai
+            }
+        });
     }
 }
