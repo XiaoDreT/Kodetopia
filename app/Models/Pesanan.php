@@ -31,5 +31,6 @@ class Pesanan extends Model
                 $pesanan->order_date = Carbon::now();  // Set order_date jika belum ada nilai
             }
         });
+        }
     }
-}
+    
