@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>React in Laravel</title>
+    <title>Kodetopia</title>
     @viteReactRefresh
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
