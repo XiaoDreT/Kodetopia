@@ -13,24 +13,34 @@ class Pesanan extends Model
     // Tentukan nama tabel yang sesuai
     protected $table = 'pesanan';  // Gunakan nama tabel yang benar (misalnya 'pesanan')
 
+    // Tentukan primary key yang sesuai
+    protected $primaryKey = 'pesanan_id';  
+
     // Kolom yang diizinkan untuk penugasan massal
     protected $fillable = [
-        'nama',
-        'email',
-        'no_telepon',
-        'status',
+        'customer_id',
         'layanan',
-        'order_date',
+        'pesan',
+        'tanggal_submit',
+        'admin_id',
+        'is_confirm',
     ];
 
-    // Set default value untuk order_date sebelum disimpan
+    // Set default value untuk tanggal_submit sebelum disimpan
     protected static function booted()
     {
         static::creating(function ($pesanan) {
-            if (!$pesanan->order_date) {
-                $pesanan->order_date = Carbon::now();  // Set order_date jika belum ada nilai
+            if (!$pesanan->tanggal_submit) {
+                $pesanan->tanggal_submit = Carbon::now();  // Set tanggal_submit jika belum ada nilai
             }
         });
-        }
     }
-    
+
+    public function customer() {
+        return $this->belongsTo(Customer::class, 'customer_id');
+    }
+
+    public function admin() {
+        return $this->belongsTo(Admin::class);
+    }
+}

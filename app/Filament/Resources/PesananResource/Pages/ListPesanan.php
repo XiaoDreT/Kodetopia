@@ -4,16 +4,14 @@ namespace App\Filament\Resources\PesananResource\Pages;
 
 use App\Filament\Resources\PesananResource;
 use Filament\Actions;
-use Filament\Resources\Pages\EditRecord;
+use Filament\Resources\Pages\ListRecords;
 
-class EditPesanan extends EditRecord
+class ListPesanan extends ListRecords
 {
     protected static string $resource = PesananResource::class;
 
-    protected function getHeaderActions(): array
+    public function getTitle(): string
     {
-        return [
-            Actions\DeleteAction::make(),
-        ];
+        return 'Pesanan';
     }
 }
