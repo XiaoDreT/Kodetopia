@@ -20,10 +20,6 @@ const Header = () => {
             </NavbarCollapse>
             <div className="flex md:order-2 gap-x-2">
                 <Button className="bg-green-400 hover:bg-green-500 cursor-pointer rounded-lg">Hubungi Kami</Button>
-                <Button onClick={() => {
-                    window.location.href = '/admin';
-                }} className="bg-blue-400 hover:bg-blue-500 cursor-pointer rounded-lg">Login</Button>
-                <NavbarToggle />
             </div>
         </Navbar>
     );
